@@ -1,0 +1,9 @@
+{
+  "short_name":"Nodemcu dashboard",
+  "name": "ESP8266 NODE MCU control dashboard",
+  "icons":[],
+  "start_url":".",
+  "display":"fullscreen",
+  "theme_color":"#44252ec",
+  "background_color":"#bbbbbb"
+}
