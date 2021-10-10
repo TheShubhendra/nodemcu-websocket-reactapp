@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap")
+
+@mixin led($led-on: false)
+    position: relative
+    width: 20px
+    margin:15px auto
+    height: 20px
+    border-radius: 10px
+    box-shadow: 0px 0px 15px 5px rgba(0, 255, 0, .75)
+    @if $led-on
+        background-color: #6dda6c
+        -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 255, 0, .75)
+        -moz-box-shadow: 0px 0px 15px 5px rgba(0, 255, 0, .75)
+    @else
+        background-color: rgba(60,68,100,0.742)
+        -webkit-box-shadow: 0px 0px 0px 5px black
+        -moz-box-shadow: 0px 0px 0px 0px black
+        box-shadow: 0px 0px 15px 1px rgba(60,68,100,0.742)
+
+@mixin button($is-on: false)
+    background-color: #95aaf3
+    position: absolute
+    width: 70px
+    height: 35px
+    left: 70%
+    top: 50%
+    transform: translate(-50%, -50%)
+    border-radius: 20px
+    padding: 2px
+    .toggle-btn
+        background-color: white
+        width: 50%
+        height: 100% 
+        border-radius: 50%
+        transition: 0.5s
+    @if $is-on
+            background-color: #4960ffcc
+            .toggle-btn
+                background-color: #75f275cc
+                margin-left: 50%
+    @else
+        margin-right:50%
+        .btn
+            background-color: #7fdec8
+
+
+.switch-bar
+    position: relative
+    margin: 10% auto
+    width: 95%
+    max-width: 600px
+    height: 150px
+    background-image: linear-gradient(to right bottom, rgb(163,161,246), rgb(98,40,198))
+    border-radius: 10px
+    
+    .sub
+        position: absolute
+        height: 65%
+        width: 44%
+        left: 30%
+        top: 50%
+        transform: translate(-50%, -50%)
+
+        .switch-name
+            position: absolute
+            font-size: 40px
+            left: 50%
+            transform: translateX(-50%)
+            font-family: 'Indie Flower'
+
+.switch-off
+    .toggle
+        @include button($is-on: false)
+    .sub
+        .led
+            @include led($led-on: false)
+
+.switch-on
+    .toggle
+        @include button($is-on: true)
+    .sub
+        .led
+            @include led($led-on: true)
