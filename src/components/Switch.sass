@@ -13,8 +13,8 @@
         -moz-box-shadow: 0px 0px 15px 5px rgba(0, 255, 0, .75)
     @else
         background-color: rgba(60,68,100,0.742)
-        -webkit-box-shadow: 0px 0px 0px 5px black
-        -moz-box-shadow: 0px 0px 0px 0px black
+        -webkit-box-shadow: 0px 0px 15px 1px rgba(60,68,100,0.742)
+        -moz-box-shadow: 0px 0px 15px 1px rgba(60,68,100,0.742)
         box-shadow: 0px 0px 15px 1px rgba(60,68,100,0.742)
 
 @mixin button($is-on: false)
@@ -51,22 +51,19 @@
     max-width: 600px
     height: 150px
     background-image: linear-gradient(to right bottom, rgb(163,161,246), rgb(98,40,198))
-    border-radius: 10px
-    
+    border-radius:20px 
     .sub
         position: absolute
         height: 65%
         width: 44%
         left: 30%
         top: 50%
+        text-align: center
         transform: translate(-50%, -50%)
 
         .switch-name
-            position: absolute
-            font-size: 40px
-            left: 50%
-            transform: translateX(-50%)
-            font-family: 'Indie Flower'
+            font-size: 35px
+            font-family: 'Indie Flower', italic
 
 .switch-off
     .toggle
