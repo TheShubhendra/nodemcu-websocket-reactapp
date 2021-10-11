@@ -4,25 +4,35 @@ import Switch from "./Switch";
 class Board extends React.Component {
     constructor(props) {
         super(props);
+	var switches = {}
+        for (let id in this.props.switches){
+	   switches[id] = {isOn: false, isLoading: true};
+	}
+	Object.keys(this.props.switches).map((id) =>
+		({id: id, isOn: false, isLoading: true}));
         this.state = {
-            is_on: Object.keys(this.props.switches).map((id) => (id: false)),
-        };
+            switch: switches
+	}
         this.props.ws.onmessage = this.handleWebhook;
     }
     handleWebhook = (event) => {
         var data = JSON.parse(event.data);
-        var is_on = this.state.is_on;
-        var state_on;
+	var currentState;
         if (data.state === "on") {
-            state_on = true;
+            currentState = true;
         } else if (data.state === "off") {
-            state_on = false;
+            currentState = false;
         }
-        is_on[data.id] = state_on;
-        this.setState({ is_on: is_on });
+	var _switch = this.state.switch;
+	_switch[data.id].isOn = currentState;
+	_switch[data.id].isLoading = false;
+        this.setState({switch:_switch});
     };
     toggle = (e, id) => {
-        var data = { id: id, toggle: this.state.is_on[id] ? "off" : "on" };
+        var data = { id: id, toggle: this.state.switch[id].isOn ? "off" : "on" };
+	var _switch = this.state.switch;
+	_switch[id].isLoading = true;
+	this.setState({switch:_switch});
         this.props.ws.send(JSON.stringify(data));
     };
     render() {
@@ -31,7 +41,8 @@ class Board extends React.Component {
                 id={id}
                 name={this.props.switches[id]}
                 toggle={this.toggle}
-                is_on={this.state.is_on[id]}
+                isOn={this.state.switch[id].isOn}
+		isLoading={this.state.switch[id].isLoading}
             />
         ));
         return <div className="switch-container"> {switch_comps} </div>;

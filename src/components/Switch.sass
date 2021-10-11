@@ -18,10 +18,10 @@
         box-shadow: 0px 0px 15px 1px rgba(60,68,100,0.742)
 
 @mixin button($is-on: false)
-    background-color: #95aaf3
     position: absolute
     width: 70px
     height: 35px
+    background-color: #95aaf3
     left: 70%
     top: 50%
     transform: translate(-50%, -50%)
@@ -33,15 +33,22 @@
         height: 100% 
         border-radius: 50%
         transition: 0.5s
+        .spinner
+            margin: 5px
+            transform: translateY(-50%)
+            font-size: 25px
+            text-align: center
+            
     @if $is-on
-            background-color: #4960ffcc
-            .toggle-btn
-                background-color: #75f275cc
-                margin-left: 50%
+        background-color: #4960ffdd 
+        .toggle-btn
+            background-color: #7ffec8
+            margin-left: 50%
     @else
-        margin-right:50%
-        .btn
-            background-color: #7fdec8
+       background-color: #95aaf3
+       .toggle-btn
+            background-color: #eeeeeebb
+            margin-right: 50%
 
 
 .switch-bar
