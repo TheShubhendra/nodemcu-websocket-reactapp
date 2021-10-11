@@ -1,9 +1,20 @@
 {
-  "short_name":"Nodemcu dashboard",
+  "short_name": "Nodemcu dashboard",
   "name": "ESP8266 NODE MCU control dashboard",
-  "icons":[],
-  "start_url":".",
-  "display":"fullscreen",
-  "theme_color":"#44252ec",
-  "background_color":"#bbbbbb"
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "type": "image/x-icon",
+      "sizes": "64×64 32×32 24×24 16×16"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512×512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#44252ec",
+  "background_color": "#bbbbbb"
 }
