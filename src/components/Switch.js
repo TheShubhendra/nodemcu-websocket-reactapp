@@ -10,7 +10,7 @@ class Switch extends React.Component{
         <div className="switch-name">{this.props.name}</div>
     </div>
     <div className="toggle" onClick={(e)=> this.props.toggle(e, this.props.id)}>
-        <div className="toggle-btn">
+        <div className="toggle-btn" style={this.props.isLoading? {"background-color": "#00000000"}:{}}>
 		<i className={this.props.isLoading ? "fa fa-spinner fa-spin spinner": " "}></i>
 	</div>
     </div>
