@@ -27,7 +27,8 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-
+const Compression = require('compression-webpack-plugin');
+const EventHooksPlugin = require('event-hooks-webpack-plugin');
 const postcssNormalize = require('postcss-normalize');
 
 const appPackageJson = require(paths.appPackageJson);
@@ -566,9 +567,6 @@ module.exports = function (webpackEnv) {
             inject: true,
             template: paths.appHtml,
           },
-	  {
-	    inlineSource: '.(js|css)$',
-	  },
           isEnvProduction
             ? {
                 minify: {
@@ -583,11 +581,46 @@ module.exports = function (webpackEnv) {
                   minifyCSS: true,
                   minifyURLs: true,
                 },
+		inlineSource: '.(js|css)$',
               }
             : undefined
         )
       ),
-      new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin),
+      isEnvProduction ? new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin) : undefined,
+      isEnvProduction ? new Compression() : undefined,
+      isEnvProduction ? new EventHooksPlugin({
+        done: () => {
+            var source = './build/index.html.gz';
+            var destination = './sketch/html.h';
+
+            var wstream = fs.createWriteStream(destination);
+            wstream.on('error', function (err) {
+                console.log(err);
+            });
+
+            var data = fs.readFileSync(source);
+            
+            wstream.write('#ifndef HTML_H\n');
+            wstream.write('#define HTML_H\n\n');
+            wstream.write('#include <Arduino.h>\n\n');                
+
+            wstream.write('#define html_len ' + data.length + '\n\n');
+
+            wstream.write('const uint8_t html[] PROGMEM = {')
+
+            for (let i = 0; i < data.length; i++) {
+                if (i % 1000 == 0) wstream.write("\n");
+                wstream.write('0x' + ('00' + data[i].toString(16)).slice(-2));
+                if (i < data.length - 1) wstream.write(',');
+            }
+
+            wstream.write('\n};')
+
+            wstream.write('\n\n#endif\n');
+
+            wstream.end();
+        }
+      }): undefined ,
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
