@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -565,6 +566,9 @@ module.exports = function (webpackEnv) {
             inject: true,
             template: paths.appHtml,
           },
+	  {
+	    inlineSource: '.(js|css)$',
+	  },
           isEnvProduction
             ? {
                 minify: {
@@ -583,6 +587,7 @@ module.exports = function (webpackEnv) {
             : undefined
         )
       ),
+      new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
