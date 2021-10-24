@@ -16,7 +16,7 @@ const switches = {
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.ws = new WebSocket("ws://127.0.0.1:4444");
+        this.ws = new WebSocket(`ws://${window.location.hostname}/ws`);
     }
     render() {
         return (

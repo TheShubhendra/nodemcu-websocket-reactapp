@@ -12,8 +12,8 @@
 #include "html.h"
 
 // WiFi Network credentials
-#define SSID "Shubhendra"
-#define PASSWORD "Sk@localghost"
+#define SSID "<NETWORK-SSID>"
+#define PASSWORD "<PASSWORD>"
 
 
 bool states[9] = {false};
