@@ -102,7 +102,7 @@ void setup() {
     }
     Serial.println("Connected.");
     Serial.printf("IP Address %s\n", WiFi.localIP());
-    Serial.printf("Gataway IP: %s\n", WiFi.gatewayIP().toString().c_str());
+    Serial.printf("Gateway IP: %s\n", WiFi.gatewayIP().toString().c_str());
     ws.onEvent(onEvent);
     server.addHandler( & ws);
     server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
